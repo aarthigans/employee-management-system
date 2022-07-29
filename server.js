@@ -1,29 +1,25 @@
-//dependencies required
-const mysql = require("mysql");
-const inquirer = require("inquirer");
-require("console.table");
-//const sql = require("./sql");
+import inquirer from 'inquirer';
+import mysql from 'mysql';
+import("console.table");
 
-//mysql connection
+//connect mysql 
 const connection = mysql.createConnection({
     host: 'localhost',
-    port: 3000,
+    port: 3306,
     user: 'root',
-    password: 'test!',
+    password: 'Flemington1!',
     database: 'employeesDB'
 });
 
+//run the app
 connection.connect(function (err) {
     if (err) throw err;
     console.log("connected as id " + connection.threadId);
-
-    // runs the app
     firstPrompt();
 });
 
-// function which prompts the user for what action they should take
+// function to direct the user about their action
 function firstPrompt() {
-
   inquirer
     .prompt({
       type: "list",
@@ -71,7 +67,7 @@ function firstPrompt() {
     });
 }
 
-//View and READ employees, SELECT * FROM
+//view/read employees
 function viewEmployee() {
   console.log("Viewing employees\n");
 
@@ -96,7 +92,7 @@ function viewEmployee() {
 
 }
 
-//View and read Employees by Department
+//view\read Employees by Department
 function viewEmployeeByDepartment() {
   console.log("Viewing employees by department\n");
 
@@ -123,7 +119,7 @@ function viewEmployeeByDepartment() {
   });
 }
 
-//when user chose the dept list, employees pop-up
+//when user choose the dept, employees pop-up
 function promptDepartment(departmentChoices) {
 
   inquirer
@@ -159,7 +155,7 @@ function promptDepartment(departmentChoices) {
 }
 
 
-// Make a employee array
+// Making an employee array
 function addEmployee() {
   console.log("Inserting an employee!")
 
@@ -206,7 +202,7 @@ function promptInsert(roleChoices) {
       console.log(answer);
 
       var query = `INSERT INTO employee SET ?`
-      // when finished prompting, insert a new item into the db with that info
+      //insert new items to the db
       connection.query(query,
         {
           first_name: answer.first_name,
@@ -225,7 +221,7 @@ function promptInsert(roleChoices) {
     });
 }
 
-//Remove Employee
+//remove Employee
 function removeEmployees() {
   console.log("Deleting an employee");
 
@@ -247,7 +243,6 @@ function removeEmployees() {
   });
 }
 
-// User choose the employee list, then employee is deleted
 function promptDelete(deleteEmployeeChoices) {
 
   inquirer
@@ -262,8 +257,8 @@ function promptDelete(deleteEmployeeChoices) {
     .then(function (answer) {
 
       var query = `DELETE FROM employee WHERE ?`;
-      // when finished prompting, insert a new item into the db with the info
-      connection.query(query, { id: answer.employeeId }, function (err, res) {
+
+         connection.query(query, { id: answer.employeeId }, function (err, res) {
         if (err) throw err;
 
         console.table(res);
@@ -274,7 +269,7 @@ function promptDelete(deleteEmployeeChoices) {
     });
 }
 
-//update the emp role,
+//update empl role,
 function updateEmployeeRole() { 
   employeeArray();
 
@@ -349,7 +344,6 @@ function promptEmployeeRole(employeeChoices, roleChoices) {
     .then(function (answer) {
 
       var query = `UPDATE employee SET role_id = ? WHERE id = ?`
-      // when finished prompting, insert a new item into the db with that info
       connection.query(query,
         [ answer.roleId,  
           answer.employeeId
@@ -365,9 +359,7 @@ function promptEmployeeRole(employeeChoices, roleChoices) {
     });
 }
 
-
-
-//adding role
+//add role
 function addRole() {
 
   var query =
@@ -382,7 +374,6 @@ function addRole() {
   connection.query(query, function (err, res) {
     if (err) throw err;
 
-    // (callbackfn: (value: T, index: number, array: readonly T[]) => U, thisArg?: any)
     const departmentChoices = res.map(({ id, name }) => ({
       value: id, name: `${id} ${name}`
     }));
