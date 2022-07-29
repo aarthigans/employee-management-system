@@ -285,7 +285,7 @@ function employeeArray() {
 	ON e.role_id = r.id
   JOIN department d
   ON d.id = r.department_id
-  JOIN employee m
+  LEFT JOIN employee m
 	ON m.id = e.manager_id`
 
   connection.query(query, function (err, res) {
