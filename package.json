@@ -1,0 +1,27 @@
+{
+  "name": "employee-management-system",
+  "version": "1.0.0",
+  "description": "This Command-line application helps users to add/view/update - the departments, employees and roles.",
+  "main": "server.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/aarthigans/employee-management-system.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/aarthigans/employee-management-system/issues"
+  },
+  "homepage": "https://github.com/aarthigans/employee-management-system#readme",
+  "dependencies": {
+    "console.table": "^0.10.0",
+    "inquirer": "^9.1.0",
+    "mysql": "^2.18.1"
+  }
+}
